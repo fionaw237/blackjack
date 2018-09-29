@@ -3,10 +3,12 @@ import java.util.ArrayList;
 public class Player {
     private String name;
     private ArrayList<Card> cards;
+    private boolean isDealer;
 
     public Player(String name) {
         this.name = name;
         this.cards = new ArrayList<>();
+        this.isDealer = false;
     }
 
     public String getName() {
@@ -35,5 +37,22 @@ public class Player {
             total += card.getValue();
         }
         return total;
+    }
+
+    public void setAsDealer(){
+        this.isDealer = true;
+    }
+
+    public void removeAsDealer(){
+        this.isDealer = false;
+    }
+
+    public boolean checkIfDealer() {
+        return this.isDealer;
+    }
+
+    public Card deal(Deck deck){
+
+        return deck.deal();
     }
 }

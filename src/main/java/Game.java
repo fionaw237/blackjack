@@ -3,14 +3,26 @@ import java.util.ArrayList;
 public class Game {
 
     private ArrayList<Player> players;
-    private Dealer dealer;
     private Deck deck;
 
-    public Game(ArrayList<Player> players, Dealer dealer, Deck deck) {
+    public Game(ArrayList<Player> players, Deck deck) {
         this.players = players;
-        this.dealer = dealer;
         this.deck = deck;
     }
+
+    public void play() {
+        Player dealer = findDealer();
+        if (dealer != null){
+            for (Player player : this.players){
+                Card card = dealer.deal(this.deck);
+                player.receiveCard(card);
+            }
+        }
+    }
+
+
+
+    // ------ these functions are for multiple players in the high/low card game
 
     public Player getWinner(){
 
@@ -47,10 +59,12 @@ public class Game {
         return highScore;
     }
 
-    public void play() {
+    public Player findDealer() {
         for (Player player : this.players){
-            Card card = dealer.deal(this.deck);
-            player.receiveCard(card);
+            if (player.checkIfDealer()){
+                return player;
+            }
         }
+        return null;
     }
 }

@@ -43,4 +43,19 @@ public class PlayerTest {
         player.receiveCard(card2);
         assertEquals(5, player.getHandValue());
     }
+
+    @Test
+    public void canBeSetAsDealer(){
+        assertEquals(false, player.checkIfDealer());
+        player.setAsDealer();
+        assertEquals(true, player.checkIfDealer());
+    }
+
+    @Test
+    public void canBeRemovedAsDealer(){
+        player.setAsDealer();
+        assertEquals(true, player.checkIfDealer());
+        player.removeAsDealer();
+        assertEquals(false, player.checkIfDealer());
+    }
 }
