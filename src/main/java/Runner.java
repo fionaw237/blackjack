@@ -34,11 +34,11 @@ public class Runner {
 
 
                     System.out.println("Would you like to stick or twist? (Type S or T)");
+                    Scanner scan = new Scanner(System.in);
+                    choice = scan.next();
                     if (choice.equalsIgnoreCase("S")){
                         break;
                     };
-                    Scanner scan = new Scanner(System.in);
-                    choice = scan.next();
 
                     while (!game.checkInput(choice)){
                         System.out.println("Please type S to stick or T to twist");
@@ -83,6 +83,9 @@ public class Runner {
                         Player winner = game.getWinner();
                         if (winner == player){
                             System.out.println("You win! :)");
+                        }
+                        else if (winner == null){
+                            System.out.println("Draw!");
                         }
                         else {
                             System.out.println("You lose! :(");
