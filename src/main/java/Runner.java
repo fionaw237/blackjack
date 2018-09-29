@@ -1,9 +1,11 @@
 import java.util.ArrayList;
+import java.util.Scanner;
+
 
 public class Runner {
 
     public static void main(String[] args){
-        Player player1 = new Player("Player 1");
+        Player player1 = new Player("Merlin");
         Player player2 = new Player("Player 2");
         ArrayList<Player> players = new ArrayList<>();
         players.add(player1);
@@ -13,13 +15,47 @@ public class Runner {
 
         game.initialDeal();
         Card firstCard = game.getDealer().firstCard();
-        System.out.println("Dealer's first card is the " + firstCard.getName() );
-        System.out.println("Your cards are:");
-        System.out.println("Your cards are:");
-//        Player winner = game.getWinner();
-//        System.out.println(player1.getName() + " has " + player1.getHandValue());
-//        System.out.println(player2.getName() + " has " + player2.getHandValue());
-//        System.out.println("The winner is " + winner.getName());
-    }
 
+        for (Player player : game.getPlayers()){
+            if (!player.checkIfDealer()){
+                System.out.println("Hi, " + player.getName() + "!");
+//                for (Card card : player.getCards()){
+//                    System.out.println(card.getName());
+//                }
+//                System.out.printf("which have a total value of " + player.getHandValue());
+//                System.out.println("");
+                System.out.println("The Dealer's first card is the " + firstCard.getName() );
+
+                String choice = "T";
+
+                while (choice.equalsIgnoreCase("T")){
+
+                    System.out.println("Your cards are:");
+                    for (Card playerCard : player.getCards()){
+                        System.out.println(playerCard.getName());
+                    }
+                    System.out.printf("which have a total value of " + player.getHandValue());
+                    System.out.println("");
+
+
+                    System.out.println("Would you like to stick or twist? (Type S or T)");
+                    Scanner scan = new Scanner(System.in);
+                    choice = scan.next();
+
+                    while (!game.checkInput(choice)){
+                        System.out.println("Please type S to stick or T to twist");
+                        choice = scan.next();
+                    }
+
+                    Card card = game.getDealer().deal(game.getDeck());
+                    player.receiveCard(card);
+
+                    if (player.getHandValue() > 21){
+                        System.out.println("Bust - You lose!");
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }

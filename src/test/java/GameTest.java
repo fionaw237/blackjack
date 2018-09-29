@@ -96,4 +96,16 @@ public class GameTest {
         assertEquals(false, player2.checkIfDealer());
     }
 
+    @Test
+    public void checkUserInputTrue(){
+        String choice = "S";
+        assertEquals(true, game.checkInput(choice));
+    }
+
+    @Test
+    public void checkUserInputFalse(){
+        String choice = "batman";
+        assertEquals(false, game.checkInput(choice));
+    }
+
 }

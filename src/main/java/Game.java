@@ -23,6 +23,10 @@ public class Game {
             }
     }
 
+    public ArrayList<Player> getPlayers() {
+        return new ArrayList<>(players);
+    }
+
     public int numberOfPlayers() {
         return this.players.size();
     }
@@ -71,5 +75,13 @@ public class Game {
 
     public Player getDealer() {
         return this.dealer;
+    }
+
+    public boolean checkInput(String choice){
+        return (choice.equalsIgnoreCase("S")) || (choice.equalsIgnoreCase("T"));
+    }
+
+    public Deck getDeck() {
+        return this.deck;
     }
 }
