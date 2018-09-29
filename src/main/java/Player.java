@@ -4,11 +4,13 @@ public class Player {
     private String name;
     private ArrayList<Card> cards;
     private boolean isDealer;
+    private boolean isBust;
 
     public Player(String name) {
         this.name = name;
         this.cards = new ArrayList<>();
         this.isDealer = false;
+        this.isBust = false;
     }
 
     public String getName() {
@@ -59,4 +61,11 @@ public class Player {
         return this.cards.get(0);
     }
 
+    public boolean checkIfBust() {
+        return this.isBust;
+    }
+
+    public void setIsBust() {
+        this.isBust = true;
+    }
 }

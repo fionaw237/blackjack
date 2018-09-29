@@ -14,17 +14,12 @@ public class Runner {
         Game game = new Game(players, deck, player2);
 
         game.initialDeal();
-        Card firstCard = game.getDealer().firstCard();
+        Card dealerFirstCard = game.getDealer().firstCard();
 
         for (Player player : game.getPlayers()){
             if (!player.checkIfDealer()){
-                System.out.println("Hi, " + player.getName() + "!");
-//                for (Card card : player.getCards()){
-//                    System.out.println(card.getName());
-//                }
-//                System.out.printf("which have a total value of " + player.getHandValue());
-//                System.out.println("");
-                System.out.println("The Dealer's first card is the " + firstCard.getName() );
+                System.out.println("Hi, " + player.getName() + ", it's your turn!");
+                System.out.println("The Dealer's first card is the " + dealerFirstCard.getName() );
 
                 String choice = "T";
 
@@ -39,6 +34,9 @@ public class Runner {
 
 
                     System.out.println("Would you like to stick or twist? (Type S or T)");
+                    if (choice.equalsIgnoreCase("S")){
+                        break;
+                    };
                     Scanner scan = new Scanner(System.in);
                     choice = scan.next();
 
@@ -51,8 +49,44 @@ public class Runner {
                     player.receiveCard(card);
 
                     if (player.getHandValue() > 21){
-                        System.out.println("Bust - You lose!");
+                        System.out.println("Bust - You lose! :(");
+                        player.setIsBust();
                         break;
+                    }
+                }
+
+                if (!player.checkIfBust()){
+
+                    System.out.println("Time for the dealer to show their second card...cards are:");
+                    for (Card playerCard : game.getDealer().getCards()){
+                        System.out.println(playerCard.getName());
+                    }
+
+                    System.out.printf("which have a total value of " + game.getDealer().getHandValue());
+                    System.out.println("");
+
+                    while (game.getDealer().getHandValue() < 16){
+                        Card card = game.getDealer().deal(game.getDeck());
+                        game.getDealer().receiveCard(card);
+                        System.out.println("Dealer gets another card...now has");
+                        for (Card playerCard : game.getDealer().getCards()){
+                            System.out.println(playerCard.getName());
+                        }
+                        System.out.printf("which have a total value of " + game.getDealer().getHandValue());
+                        System.out.println("");
+                    }
+
+                    if (game.getDealer().getHandValue() > 21){
+                        System.out.println("Dealer is bust! You win! :)");
+                    }
+                    else{
+                        Player winner = game.getWinner();
+                        if (winner == player){
+                            System.out.println("You win! :)");
+                        }
+                        else {
+                            System.out.println("You lose! :(");
+                        }
                     }
                 }
             }
