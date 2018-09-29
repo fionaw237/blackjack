@@ -68,4 +68,34 @@ public class PlayerTest {
         dealer.receiveCard(card2);
         assertEquals(card1, dealer.firstCard());
     }
+
+    @Test
+    public void hasAce(){
+        assertEquals(false, player.hasCertainCard(Rank.ACE));
+        player.receiveCard(card1);
+        assertEquals(true, player.hasCertainCard(Rank.ACE));
+    }
+
+    @Test
+    public void hasRoyalCard(){
+        assertEquals(false, player.hasCertainCard(Rank.QUEEN));
+        Card queen = new Card(Suit.SPADES, Rank.QUEEN);
+        player.receiveCard(queen);
+        assertEquals(true, player.hasCertainCard(Rank.QUEEN));
+    }
+
+    @Test
+    public void hasBlackjackTrue(){
+        Card queen = new Card(Suit.SPADES, Rank.QUEEN);
+        player.receiveCard(queen);
+        player.receiveCard(card1);
+        assertEquals(true, player.hasBlackjack());
+    }
+
+    @Test
+    public void hasBlackjackFalse(){
+        assertEquals(false, player.hasBlackjack());
+    }
+
+
 }

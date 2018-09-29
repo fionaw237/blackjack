@@ -68,4 +68,30 @@ public class Player {
     public void setIsBust() {
         this.isBust = true;
     }
+
+    public boolean hasCertainCard(Rank rank){
+        for (Card card : this.cards){
+            if (card.getRank() == rank){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasRoyalCard(){
+        ArrayList<Rank> royalRanks = new ArrayList<>();
+        royalRanks.add(Rank.JACK);
+        royalRanks.add(Rank.QUEEN);
+        royalRanks.add(Rank.KING);
+        for (Card card : this.cards){
+            if (royalRanks.contains(card.getRank())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasBlackjack(){
+        return (numberOfCards() == 2 && hasCertainCard(Rank.ACE) && hasRoyalCard());
+    }
 }

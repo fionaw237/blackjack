@@ -84,4 +84,13 @@ public class Game {
     public Deck getDeck() {
         return this.deck;
     }
+
+    public void showCards(Player player) {
+        for (Card playerCard : player.getCards()){
+            System.out.println(playerCard.getName());
+        }
+        System.out.printf("which have a total value of " + player.getHandValue());
+        System.out.println("");
+    }
+
 }
