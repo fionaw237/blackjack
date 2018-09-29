@@ -20,6 +20,15 @@ public class Game {
         }
     }
 
+    public Player findDealer() {
+        for (Player player : this.players){
+            if (player.checkIfDealer()){
+                return player;
+            }
+        }
+        return null;
+    }
+
 
 
     // ------ these functions are for multiple players in the high/low card game
@@ -59,12 +68,4 @@ public class Game {
         return highScore;
     }
 
-    public Player findDealer() {
-        for (Player player : this.players){
-            if (player.checkIfDealer()){
-                return player;
-            }
-        }
-        return null;
-    }
 }
