@@ -66,6 +66,6 @@ public class PlayerTest {
         Card card2 = new Card(Suit.SPADES, Rank.JACK);
         dealer.receiveCard(card1);
         dealer.receiveCard(card2);
-        assertEquals(9, dealer.firstCardValue());
+        assertEquals(card1, dealer.firstCard());
     }
 }

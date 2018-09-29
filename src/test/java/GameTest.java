@@ -10,7 +10,6 @@ public class GameTest {
 
     Player player1;
     Player player2;
-    Player dealer;
     Deck deck;
     Game game;
     ArrayList<Player> players;
@@ -19,12 +18,16 @@ public class GameTest {
     public void before(){
         player1 = new Player("Player 1");
         player2 = new Player("Player 2");
-        player2.setAsDealer();
         players = new ArrayList<>();
         players.add(player1);
         players.add(player2);
         deck = new Deck();
-        game = game = new Game(players, deck);
+        game = game = new Game(players, deck, player2);
+    }
+
+    @Test
+    public void hasDealer(){
+        assertEquals(player2, game.getDealer());
     }
 
     @Test
@@ -40,16 +43,6 @@ public class GameTest {
         assertEquals(48, deck.numberOfCards());
     }
 
-    @Test
-    public void canFindDealer(){
-        assertEquals(player2, game.findDealer());
-    }
-
-    @Test
-    public void findDealerGivesNullIfNoDealer(){
-        player2.removeAsDealer();
-        assertEquals(null, game.findDealer());
-    }
 
     @Test
     public void canGetWinner(){
@@ -94,6 +87,13 @@ public class GameTest {
         player1.receiveCard(new Card(Suit.HEARTS, Rank.SIX));
         player2.receiveCard(new Card(Suit.DIAMONDS, Rank.ACE));
         assertEquals(null, game.getWinner());
+    }
+
+    @Test
+    public void canChangeDealer(){
+        game.changeDealer(player1);
+        assertEquals(true, player1.checkIfDealer());
+        assertEquals(false, player2.checkIfDealer());
     }
 
 }

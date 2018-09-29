@@ -20,4 +20,7 @@ public class Card {
         return this.rank.getValue();
     }
 
+    public String getName() {
+        return getRank().toString() + " of " + getSuit().toString();
+    }
 }

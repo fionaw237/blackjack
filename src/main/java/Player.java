@@ -55,14 +55,8 @@ public class Player {
         return deck.deal();
     }
 
-    public int firstCardValue(){
-        if (checkIfDealer()){
-            return this.cards.get(0).getValue();
-        }
-        else {
-            return 0;
-        }
+    public Card firstCard(){
+        return this.cards.get(0);
     }
-
 
 }

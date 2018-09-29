@@ -25,4 +25,9 @@ public class CardTest {
         assertEquals(1, card.getValue());
     }
 
+    @Test
+    public void canGetNameOfCard(){
+        assertEquals("ACE of HEARTS", card.getName());
+    }
+
 }

@@ -4,41 +4,27 @@ public class Game {
 
     private ArrayList<Player> players;
     private Deck deck;
+    private Player dealer;
 
-    public Game(ArrayList<Player> players, Deck deck) {
+    public Game(ArrayList<Player> players, Deck deck, Player dealer) {
         this.players = players;
         this.deck = deck;
+        this.dealer = dealer;
+        dealer.setAsDealer();
     }
 
     public void initialDeal() {
-        Player dealer = findDealer();
 
-        if (dealer != null){
-
-            for (int i = 0; i < numberOfPlayers() ; i++) {
-
-                for (Player player : this.players){
-                    Card card = dealer.deal(this.deck);
-                    player.receiveCard(card);
+        for (int i = 0; i < numberOfPlayers() ; i++) {
+            for (Player player : this.players){
+                Card card = this.dealer.deal(this.deck);
+                player.receiveCard(card);
                 }
-
             }
-        }
-
-
     }
 
     public int numberOfPlayers() {
         return this.players.size();
-    }
-
-    public Player findDealer() {
-        for (Player player : this.players){
-            if (player.checkIfDealer()){
-                return player;
-            }
-        }
-        return null;
     }
 
 
@@ -77,4 +63,13 @@ public class Game {
         return highScore;
     }
 
+    public void changeDealer(Player player) {
+        this.dealer.removeAsDealer();
+        player.setAsDealer();
+        this.dealer = player;
+    }
+
+    public Player getDealer() {
+        return this.dealer;
+    }
 }
