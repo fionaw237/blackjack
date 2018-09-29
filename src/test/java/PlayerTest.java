@@ -6,12 +6,15 @@ import static org.junit.Assert.assertEquals;
 public class PlayerTest {
 
     Player player;
+    Player dealer;
     Deck deck;
     Card card1;
 
     @Before
     public void before(){
         player = new Player("Player 1");
+        dealer = new Player("Player 2");
+        dealer.setAsDealer();
         deck = new Deck();
         card1 = new Card(Suit.HEARTS, Rank.ACE);
     }
@@ -55,5 +58,14 @@ public class PlayerTest {
         assertEquals(true, player.checkIfDealer());
         player.removeAsDealer();
         assertEquals(false, player.checkIfDealer());
+    }
+
+    @Test
+    public void showFirstCardIfDealer(){
+        Card card1 = new Card(Suit.HEARTS, Rank.NINE);
+        Card card2 = new Card(Suit.SPADES, Rank.JACK);
+        dealer.receiveCard(card1);
+        dealer.receiveCard(card2);
+        assertEquals(9, dealer.firstCardValue());
     }
 }

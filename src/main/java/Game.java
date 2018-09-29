@@ -10,14 +10,26 @@ public class Game {
         this.deck = deck;
     }
 
-    public void play() {
+    public void initialDeal() {
         Player dealer = findDealer();
+
         if (dealer != null){
-            for (Player player : this.players){
-                Card card = dealer.deal(this.deck);
-                player.receiveCard(card);
+
+            for (int i = 0; i < numberOfPlayers() ; i++) {
+
+                for (Player player : this.players){
+                    Card card = dealer.deal(this.deck);
+                    player.receiveCard(card);
+                }
+
             }
         }
+
+
+    }
+
+    public int numberOfPlayers() {
+        return this.players.size();
     }
 
     public Player findDealer() {
@@ -29,9 +41,6 @@ public class Game {
         return null;
     }
 
-
-
-    // ------ these functions are for multiple players in the high/low card game
 
     public Player getWinner(){
 

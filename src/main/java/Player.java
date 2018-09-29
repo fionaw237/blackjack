@@ -52,7 +52,17 @@ public class Player {
     }
 
     public Card deal(Deck deck){
-
         return deck.deal();
     }
+
+    public int firstCardValue(){
+        if (checkIfDealer()){
+            return this.cards.get(0).getValue();
+        }
+        else {
+            return 0;
+        }
+    }
+
+
 }

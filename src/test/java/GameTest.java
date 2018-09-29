@@ -8,7 +8,8 @@ import static org.junit.Assert.assertNotNull;
 
 public class GameTest {
 
-    Player player;
+    Player player1;
+    Player player2;
     Player dealer;
     Deck deck;
     Game game;
@@ -16,33 +17,83 @@ public class GameTest {
 
     @Before
     public void before(){
-        player = new Player("Player");
-        dealer = new Player("Dealer");
-        dealer.setAsDealer();
+        player1 = new Player("Player 1");
+        player2 = new Player("Player 2");
+        player2.setAsDealer();
         players = new ArrayList<>();
-        players.add(player);
-        players.add(dealer);
+        players.add(player1);
+        players.add(player2);
         deck = new Deck();
         game = game = new Game(players, deck);
     }
 
-//    @Test
-//    public void canPlay(){
-//        game.play();
-//        assertEquals(2, player.numberOfCards());
-//        assertEquals(2, dealer.numberOfCards());
-//        assertEquals(48, deck.numberOfCards());
-//    }
+    @Test
+    public void canGetNoOfPlayers(){
+        assertEquals(2, game.numberOfPlayers());
+    }
+
+    @Test
+    public void initialDeal(){
+        game.initialDeal();
+        assertEquals(2, player1.numberOfCards());
+        assertEquals(2, player2.numberOfCards());
+        assertEquals(48, deck.numberOfCards());
+    }
 
     @Test
     public void canFindDealer(){
-        assertEquals(dealer, game.findDealer());
+        assertEquals(player2, game.findDealer());
     }
 
     @Test
     public void findDealerGivesNullIfNoDealer(){
-        dealer.removeAsDealer();
+        player2.removeAsDealer();
         assertEquals(null, game.findDealer());
+    }
+
+    @Test
+    public void canGetWinner(){
+        player1.receiveCard(new Card(Suit.HEARTS, Rank.TWO));
+        player1.receiveCard(new Card(Suit.HEARTS, Rank.NINE));
+        player2.receiveCard(new Card(Suit.CLUBS, Rank.THREE));
+        player2.receiveCard(new Card(Suit.CLUBS, Rank.JACK));
+        assertEquals(player2, game.getWinner());
+    }
+
+        @Test
+    public void canGetHighScore(){
+        player1.receiveCard(new Card(Suit.HEARTS, Rank.TWO));
+        player2.receiveCard(new Card(Suit.CLUBS, Rank.SIX));
+        player1.receiveCard(new Card(Suit.HEARTS, Rank.KING));
+        player2.receiveCard(new Card(Suit.DIAMONDS, Rank.THREE));
+        assertEquals(12, game.highestScore());
+    }
+
+    @Test
+    public void isDraw(){
+        player1.receiveCard(new Card(Suit.HEARTS, Rank.THREE));
+        player2.receiveCard(new Card(Suit.CLUBS, Rank.SIX));
+        player1.receiveCard(new Card(Suit.HEARTS, Rank.SIX));
+        player2.receiveCard(new Card(Suit.DIAMONDS, Rank.THREE));
+        assertEquals(true, game.isDraw());
+    }
+
+    @Test
+    public void isNotDraw(){
+        player1.receiveCard(new Card(Suit.HEARTS, Rank.ACE));
+        player2.receiveCard(new Card(Suit.CLUBS, Rank.SIX));
+        player1.receiveCard(new Card(Suit.HEARTS, Rank.TWO));
+        player2.receiveCard(new Card(Suit.DIAMONDS, Rank.TWO));
+        assertEquals(false, game.isDraw());
+    }
+
+    @Test
+    public void getWinnerReturnsNullIfDraw(){
+        player1.receiveCard(new Card(Suit.HEARTS, Rank.ACE));
+        player2.receiveCard(new Card(Suit.CLUBS, Rank.SIX));
+        player1.receiveCard(new Card(Suit.HEARTS, Rank.SIX));
+        player2.receiveCard(new Card(Suit.DIAMONDS, Rank.ACE));
+        assertEquals(null, game.getWinner());
     }
 
 }
