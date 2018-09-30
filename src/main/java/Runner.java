@@ -103,9 +103,6 @@ public class Runner {
                     System.out.println(result);
                 }
             }
-
         }
-
-
     }
 }
