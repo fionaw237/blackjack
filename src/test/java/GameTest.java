@@ -50,16 +50,7 @@ public class GameTest {
         player1.receiveCard(new Card(Suit.HEARTS, Rank.NINE));
         player2.receiveCard(new Card(Suit.CLUBS, Rank.THREE));
         player2.receiveCard(new Card(Suit.CLUBS, Rank.JACK));
-        assertEquals(player2, game.getWinner());
-    }
-
-        @Test
-    public void canGetHighScore(){
-        player1.receiveCard(new Card(Suit.HEARTS, Rank.TWO));
-        player2.receiveCard(new Card(Suit.CLUBS, Rank.SIX));
-        player1.receiveCard(new Card(Suit.HEARTS, Rank.KING));
-        player2.receiveCard(new Card(Suit.DIAMONDS, Rank.THREE));
-        assertEquals(12, game.highestScore());
+        assertEquals(player2, game.getWinner(player1));
     }
 
     @Test
@@ -68,7 +59,7 @@ public class GameTest {
         player2.receiveCard(new Card(Suit.CLUBS, Rank.SIX));
         player1.receiveCard(new Card(Suit.HEARTS, Rank.SIX));
         player2.receiveCard(new Card(Suit.DIAMONDS, Rank.THREE));
-        assertEquals(true, game.isDraw());
+        assertEquals(true, game.isDraw(player1));
     }
 
     @Test
@@ -77,7 +68,7 @@ public class GameTest {
         player2.receiveCard(new Card(Suit.CLUBS, Rank.SIX));
         player1.receiveCard(new Card(Suit.HEARTS, Rank.TWO));
         player2.receiveCard(new Card(Suit.DIAMONDS, Rank.TWO));
-        assertEquals(false, game.isDraw());
+        assertEquals(false, game.isDraw(player1));
     }
 
     @Test
@@ -86,7 +77,7 @@ public class GameTest {
         player2.receiveCard(new Card(Suit.CLUBS, Rank.SIX));
         player1.receiveCard(new Card(Suit.HEARTS, Rank.SIX));
         player2.receiveCard(new Card(Suit.DIAMONDS, Rank.ACE));
-        assertEquals(null, game.getWinner());
+        assertEquals(null, game.getWinner(player1));
     }
 
     @Test

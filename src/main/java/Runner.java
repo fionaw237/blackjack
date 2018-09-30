@@ -66,14 +66,14 @@ public class Runner {
                         System.out.println("Dealer is bust! You win! :)");
                     }
                     else{
-                        Player winner = game.getWinner();
+                        Player winner = game.getWinner(player);
                         if (winner == player){
                             System.out.println("You win! :)");
                         }
                         else if (winner == null){
                             System.out.println("Draw!");
                         }
-                        else {
+                        else if (winner == game.getDealer()) {
                             System.out.println("You lose! :(");
                         }
                     }

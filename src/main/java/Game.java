@@ -32,39 +32,22 @@ public class Game {
     }
 
 
-    public Player getWinner(){
+    public Player getWinner(Player winner){
 
-        if (isDraw()){
+        if (isDraw(winner)){
             return null;
         }
 
-        Player winner = this.players.get(0);
-        for (Player player : players){
-            if (player.getHandValue() > winner.getHandValue()){
-                winner = player;
-            }
+
+        if (this.dealer.getHandValue() > winner.getHandValue()){
+            winner = dealer;
         }
+
         return winner;
     }
 
-    public boolean isDraw(){
-        int playersWithHighScore = 0;
-        int highScore = highestScore();
-        for (Player player : players){
-            if (player.getHandValue() == highScore){
-                playersWithHighScore += 1;            }
-        }
-        return playersWithHighScore > 1;
-    }
-
-    public int highestScore(){
-        int highScore = 0;
-        for (Player player : this.players){
-            if (player.getHandValue() > highScore){
-                highScore = player.getHandValue();
-            }
-        }
-        return highScore;
+    public boolean isDraw(Player player){
+        return this.dealer.getHandValue() == player.getHandValue();
     }
 
     public void changeDealer(Player player) {
@@ -89,8 +72,44 @@ public class Game {
         for (Card playerCard : player.getCards()){
             System.out.println(playerCard.getName());
         }
-        System.out.printf("which have a total value of " + player.getHandValue());
+        System.out.println("which have a total value of " + player.getHandValue());
         System.out.println("");
     }
+
+
+//    public Player getWinner(){
+//
+//        if (isDraw()){
+//            return null;
+//        }
+//
+//        Player winner = this.players.get(0);
+//        for (Player player : players){
+//            if (player.getHandValue() > winner.getHandValue()){
+//                winner = player;
+//            }
+//        }
+//        return winner;
+//    }
+
+//    public boolean isDraw(){
+//        int playersWithHighScore = 0;
+//        int highScore = highestScore();
+//        for (Player player : players){
+//            if (player.getHandValue() == highScore){
+//                playersWithHighScore += 1;            }
+//        }
+//        return playersWithHighScore > 1;
+//    }
+//
+//    public int highestScore(){
+//        int highScore = 0;
+//        for (Player player : this.players){
+//            if (player.getHandValue() > highScore){
+//                highScore = player.getHandValue();
+//            }
+//        }
+//        return highScore;
+//    }
 
 }
