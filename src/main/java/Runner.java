@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class Runner {
 
     public static void main(String[] args){
-        Player player1 = new Player("Merlin");
+        Player player1 = new Player("Player 1");
         Player player2 = new Player("Dealer");
-        Player player3 = new Player("Sparky");
+        Player player3 = new Player("Player 2");
         ArrayList<Player> players = new ArrayList<>();
         players.add(player1);
         players.add(player2);
