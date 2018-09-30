@@ -43,7 +43,6 @@ public class GameTest {
         assertEquals(48, deck.numberOfCards());
     }
 
-
     @Test
     public void canGetWinner(){
         player1.receiveCard(new Card(Suit.HEARTS, Rank.TWO));
@@ -99,16 +98,46 @@ public class GameTest {
         assertEquals(false, game.checkInput(choice));
     }
 
-//    @Test
-//    public void bothScore21DealerWinsWithBlackjack(){
-//        player1.receiveCard(new Card(Suit.HEARTS, Rank.ACE));
-//        player2.receiveCard(new Card(Suit.CLUBS, Rank.ACE));
-//        player1.receiveCard(new Card(Suit.HEARTS, Rank.TEN));
-//        player2.receiveCard(new Card(Suit.DIAMONDS, Rank.KING));
-//        assertEquals(21, game.getDealer().getHandValue());
-//        assertEquals(21, player1.getHandValue());
-//
-//        assertEquals(false, game.isDraw(player1));
-//    }
+    @Test
+    public void bothScore21DealerWinsWithBlackjack(){
+        player1.receiveCard(new Card(Suit.HEARTS, Rank.ACE));
+        player2.receiveCard(new Card(Suit.CLUBS, Rank.ACE));
+        player1.receiveCard(new Card(Suit.HEARTS, Rank.TEN));
+        player2.receiveCard(new Card(Suit.DIAMONDS, Rank.KING));
+        player1.chooseAceHigh();
+        player2.chooseAceHigh();
+        assertEquals(21, game.getDealer().getHandValue());
+        assertEquals(21, player1.getHandValue());
+        assertEquals(false, game.isDraw(player1));
+
+        assertEquals(game.getDealer(), game.getWinner(player1));
+    }
+
+    @Test
+    public void bothScore21PlayerWinsWithBlackjack(){
+        player1.receiveCard(new Card(Suit.HEARTS, Rank.ACE));
+        player2.receiveCard(new Card(Suit.CLUBS, Rank.ACE));
+        player2.receiveCard(new Card(Suit.HEARTS, Rank.TEN));
+        player1.receiveCard(new Card(Suit.DIAMONDS, Rank.KING));
+        player1.chooseAceHigh();
+        player2.chooseAceHigh();
+        assertEquals(21, game.getDealer().getHandValue());
+        assertEquals(21, player1.getHandValue());
+        assertEquals(false, game.isDraw(player1));
+        assertEquals(player1, game.getWinner(player1));
+    }
+
+    @Test
+    public void bothHaveBlackjackDraw(){
+        player1.receiveCard(new Card(Suit.HEARTS, Rank.ACE));
+        player2.receiveCard(new Card(Suit.CLUBS, Rank.ACE));
+        player2.receiveCard(new Card(Suit.HEARTS, Rank.QUEEN));
+        player1.receiveCard(new Card(Suit.DIAMONDS, Rank.KING));
+        player1.chooseAceHigh();
+        player2.chooseAceHigh();
+        assertEquals(21, game.getDealer().getHandValue());
+        assertEquals(21, player1.getHandValue());
+        assertEquals(true, game.isDraw(player1));
+    }
 
 }

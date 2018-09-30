@@ -32,14 +32,26 @@ public class Game {
     }
 
 
-    public Player getWinner(Player winner){
+    public Player getWinner(Player player){
 
-        if (isDraw(winner)){
-            return null;
+        Player winner = null;
+        if (isDraw(player)){
+            return winner;
         }
 
-        if (this.dealer.getHandValue() > winner.getHandValue()){
+        if (this.dealer.getHandValue() == 21 && player.getHandValue() == 21){
+            if (dealer.hasBlackjack()){
+                winner = dealer;
+            }
+            else if (player.hasBlackjack()){
+                winner = player;
+            }
+        }
+        else if (this.dealer.getHandValue() > player.getHandValue()){
             winner = dealer;
+        }
+        else if (this.dealer.getHandValue() < player.getHandValue()){
+            winner = player;
         }
         return winner;
     }
@@ -47,7 +59,6 @@ public class Game {
     public boolean isDraw(Player player){
 
         if (this.dealer.getHandValue() == 21 && player.getHandValue() == 21){
-            System.out.println("hi");
             return dealer.hasBlackjack() == player.hasBlackjack();
         }
 
