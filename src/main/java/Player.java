@@ -104,4 +104,7 @@ public class Player {
         return this.numberOfAces;
     }
 
+    public int getHighAces() {
+        return this.highAces;
+    }
 }

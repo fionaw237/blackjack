@@ -88,6 +88,7 @@ public class Runner {
             game.showCards(game.getDealer());
 
             if (game.getDealer().hasBlackjack()){
+                game.getDealer().chooseAceHigh();
                 System.out.println("Dealer has blackjack!");
             }
 

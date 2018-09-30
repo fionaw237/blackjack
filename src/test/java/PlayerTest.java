@@ -114,5 +114,4 @@ public class PlayerTest {
         assertEquals(2, player.getNumberOfAces());
     }
 
-
 }
