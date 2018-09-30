@@ -4,14 +4,13 @@ public class Player {
     private String name;
     private ArrayList<Card> cards;
     private boolean isDealer;
-    private boolean isBust;
     private int highAces;
+    private int numberOfAces;
 
     public Player(String name) {
         this.name = name;
         this.cards = new ArrayList<>();
         this.isDealer = false;
-        this.isBust = false;
         this.highAces = 0;
     }
 
@@ -20,7 +19,7 @@ public class Player {
     }
 
     public ArrayList<Card> getCards() {
-        return new ArrayList<Card>(this.cards);
+        return new ArrayList<>(this.cards);
     }
 
     public int numberOfCards(){
@@ -29,6 +28,9 @@ public class Player {
 
     public void receiveCard(Card card) {
         this.cards.add(card);
+        if (card.getRank() == Rank.ACE){
+            this.numberOfAces += 1;
+        }
     }
 
     public boolean hasCard() {
@@ -65,11 +67,7 @@ public class Player {
     }
 
     public boolean checkIfBust() {
-        return this.isBust;
-    }
-
-    public void setIsBust() {
-        this.isBust = true;
+        return getHandValue() > 21;
     }
 
     public boolean hasCertainCard(Rank rank){
@@ -98,19 +96,12 @@ public class Player {
         return (numberOfCards() == 2 && hasCertainCard(Rank.ACE) && hasRoyalCard());
     }
 
-
     public void chooseAceHigh() {
         this.highAces += 1;
         }
 
-    public int numberOfAces() {
-        int aces = 0;
-        for (Card card : this.cards){
-            if (card.getRank() == Rank.ACE){
-                aces += 1;
-            }
-        }
-
-        return aces;
+    public int getNumberOfAces() {
+        return this.numberOfAces;
     }
+
 }

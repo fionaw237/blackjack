@@ -32,15 +32,6 @@ public class Deck {
         return this.cards;
     }
 
-    public boolean isShuffled() {
-        Deck tempDeck = new Deck();
-        tempDeck.populate();
-        Card firstCard = tempDeck.getCards().get(0);
-        Card secondCard = tempDeck.getCards().get(1);
-        return (firstCard.getSuit() != this.cards.get(0).getSuit()) ||
-                (firstCard.getValue() != this.cards.get(0).getValue());
-    }
-
     public int numberOfCards(){
         return this.cards.size();
     }

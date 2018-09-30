@@ -19,14 +19,6 @@ public class DeckTest {
         assertEquals(52, deck.numberOfCards());
     }
 
-
-    @Test
-    public void canShuffleDeck(){
-//        deck.shuffle();
-        assertEquals(true, deck.isShuffled());
-    }
-
-
     @Test
     public void canDealCard(){
 //        deck.shuffle();

@@ -31,12 +31,18 @@ public class Runner {
                     System.out.println("Would you like to stick or twist? (Type S or T)");
                     Scanner scan = new Scanner(System.in);
                     choice = scan.next();
+
+                    while (!game.checkInput(choice)){
+                        System.out.println("Please type S to stick or T to twist");
+                        choice = scan.next();
+                    }
+
                     if (choice.equalsIgnoreCase("S")){
                         if (player.hasCertainCard(Rank.ACE)){
-                            int aces = player.numberOfAces();
-                            System.out.println("You have "+ aces + " aces(s)");
-                            for (int i = 0; i < player.numberOfAces(); i++) {
-                                System.out.println("Ace number " + i+1 + ": high or low? Type H or L");
+                            System.out.println("You have "+ player.getNumberOfAces() + " aces(s)");
+                            for (int i = 1; i < player.getNumberOfAces() + 1; i++) {
+                                int aceNumber = i;
+                                System.out.println("Ace number " + aceNumber + ": high or low? Type H or L");
 
                                 String aceChoice = scan.next();
 
@@ -50,21 +56,21 @@ public class Runner {
                                 }
                             }
                         }
-                        System.out.println("Your total is " + player.getHandValue());
+
+                        if (player.hasBlackjack()){
+                            System.out.println("You have blackjack!");
+                        }
+                        else {
+                            System.out.println("Your total is " + player.getHandValue());
+                        }
                         break;
                     }
 
-                    while (!game.checkInput(choice)){
-                        System.out.println("Please type S to stick or T to twist");
-                        choice = scan.next();
-                    }
+                    Card nextCard = game.additionalDeal(player);
 
-                    Card card = game.getDealer().deal(game.getDeck());
-                    player.receiveCard(card);
-
-                    if (player.getHandValue() > 21){
+                    if (player.checkIfBust()){
+                        System.out.println(nextCard.getName());
                         System.out.println("Bust - You lose! :(");
-                        player.setIsBust();
                         break;
                     }
                 }
@@ -74,28 +80,18 @@ public class Runner {
                     System.out.println("Time for the dealer to show their second card...cards are:");
                     game.showCards(game.getDealer());
 
+                    if (game.getDealer().hasBlackjack()){
+                        System.out.println("Dealer has blackjack!");
+                    }
+
                     while (game.getDealer().getHandValue() < 16){
-                        Card card = game.getDealer().deal(game.getDeck());
-                        game.getDealer().receiveCard(card);
+                        game.additionalDeal(game.getDealer());
                         System.out.println("Dealer gets another card...now has");
                         game.showCards(game.getDealer());
                     }
 
-                    if (game.getDealer().getHandValue() > 21){
-                        System.out.println("Dealer is bust! You win! :)");
-                    }
-                    else{
-                        Player winner = game.getWinner(player);
-                        if (winner == player){
-                            System.out.println("You win! :)");
-                        }
-                        else if (winner == null){
-                            System.out.println("Draw!");
-                        }
-                        else if (winner == game.getDealer()) {
-                            System.out.println("You lose! :(");
-                        }
-                    }
+                    String result = game.finalResult(player);
+                    System.out.println(result);
                 }
             }
         }

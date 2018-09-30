@@ -107,11 +107,11 @@ public class PlayerTest {
 
     @Test
     public void canGetNumberOfAces(){
-        assertEquals(0, player.numberOfAces());
+        assertEquals(0, player.getNumberOfAces());
         player.receiveCard(card1);
-        assertEquals(1, player.numberOfAces());
+        assertEquals(1, player.getNumberOfAces());
         player.receiveCard(card1);
-        assertEquals(2, player.numberOfAces());
+        assertEquals(2, player.getNumberOfAces());
     }
 
 

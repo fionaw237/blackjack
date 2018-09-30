@@ -82,10 +82,39 @@ public class Game {
         }
 
         if (player == this.dealer){
-            System.out.println("which have a total value of " + player.getHandValue());
+            if (this.dealer.hasBlackjack()){
+                System.out.println("Dealer has blackjack!");
+            }
+            else {
+                System.out.println("which have a total value of " + player.getHandValue());
+            }
         }
 
         System.out.println("");
+    }
+
+    public String finalResult(Player player) {
+        if (getDealer().getHandValue() > 21){
+            return "Dealer is bust! You win! :)";
+        }
+        else{
+            Player winner = getWinner(player);
+            if (winner == player){
+                return "You win! :)";
+            }
+            else if (winner == null){
+                return "Draw!";
+            }
+            else {
+                return "You lose! :(";
+            }
+        }
+    }
+
+    public Card additionalDeal(Player player) {
+        Card card = getDealer().deal(getDeck());
+        player.receiveCard(card);
+        return card;
     }
 
 
