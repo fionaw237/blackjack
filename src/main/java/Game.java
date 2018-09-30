@@ -15,7 +15,7 @@ public class Game {
 
     public void initialDeal() {
 
-        for (int i = 0; i < numberOfPlayers() ; i++) {
+        for (int i = 0; i < 2 ; i++) {
             for (Player player : this.players){
                 Card card = this.dealer.deal(this.deck);
                 player.receiveCard(card);
@@ -106,18 +106,18 @@ public class Game {
 
     public String finalResult(Player player) {
         if (getDealer().getHandValue() > 21){
-            return "Dealer is bust! You win! :)";
+            return "Dealer is bust! You win, " + player.getName() + " :)";
         }
         else{
             Player winner = getWinner(player);
             if (winner == player){
-                return "You win! :)";
+                return "You win, " + player.getName() + "! :)";
             }
             else if (winner == null){
-                return "Draw!";
+                return player.getName() + ", it's a draw!";
             }
             else {
-                return "You lose! :(";
+                return "You lose, " + player.getName() + "! :(";
             }
         }
     }
@@ -126,6 +126,16 @@ public class Game {
         Card card = getDealer().deal(getDeck());
         player.receiveCard(card);
         return card;
+    }
+
+    public boolean allPlayersBust() {
+        boolean allBust = true;
+        for (Player player : getPlayers()){
+            if (!player.checkIfBust()){
+                allBust = false;
+            }
+        }
+        return allBust;
     }
 
 

@@ -6,10 +6,12 @@ public class Runner {
 
     public static void main(String[] args){
         Player player1 = new Player("Merlin");
-        Player player2 = new Player("Player 2");
+        Player player2 = new Player("Dealer");
+        Player player3 = new Player("Sparky");
         ArrayList<Player> players = new ArrayList<>();
         players.add(player1);
         players.add(player2);
+        players.add(player3);
         Deck deck = new Deck();
         Game game = new Game(players, deck, player2);
 
@@ -17,6 +19,7 @@ public class Runner {
 
         for (Player player : game.getPlayers()){
             if (!player.checkIfDealer()){
+                System.out.println("");
                 System.out.println("Hi, " + player.getName() + ", it's your turn!");
                 Card dealerFirstCard = game.getDealer().firstCard();
                 System.out.println("The Dealer's first card is the " + dealerFirstCard.getName());
@@ -61,7 +64,7 @@ public class Runner {
                             System.out.println("You have blackjack!");
                         }
                         else {
-                            System.out.println("Your total is " + player.getHandValue());
+                            System.out.println(player.getName() + ", your total is " + player.getHandValue());
                         }
                         break;
                     }
@@ -70,30 +73,39 @@ public class Runner {
 
                     if (player.checkIfBust()){
                         System.out.println(nextCard.getName());
-                        System.out.println("Bust - You lose! :(");
+                        System.out.println("Bust - You lose, " + player.getName() + "! :(");
+                        System.out.println("");
                         break;
                     }
                 }
+            }
+        }
 
-                if (!player.checkIfBust()){
 
-                    System.out.println("Time for the dealer to show their second card...cards are:");
-                    game.showCards(game.getDealer());
+        if (!game.allPlayersBust()){
 
-                    if (game.getDealer().hasBlackjack()){
-                        System.out.println("Dealer has blackjack!");
-                    }
+            System.out.println("Time for the dealer to show their second card...cards are:");
+            game.showCards(game.getDealer());
 
-                    while (game.getDealer().getHandValue() < 16){
-                        game.additionalDeal(game.getDealer());
-                        System.out.println("Dealer gets another card...now has");
-                        game.showCards(game.getDealer());
-                    }
+            if (game.getDealer().hasBlackjack()){
+                System.out.println("Dealer has blackjack!");
+            }
 
+            while (game.getDealer().getHandValue() < 16){
+                game.additionalDeal(game.getDealer());
+                System.out.println("Dealer gets another card...now has");
+                game.showCards(game.getDealer());
+            }
+
+            for (Player player : game.getPlayers()){
+                if (!player.checkIfDealer() && !player.checkIfBust()){
                     String result = game.finalResult(player);
                     System.out.println(result);
                 }
             }
+
         }
+
+
     }
 }

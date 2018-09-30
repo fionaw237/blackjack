@@ -10,6 +10,7 @@ public class GameTest {
 
     Player player1;
     Player player2;
+    Player player3;
     Deck deck;
     Game game;
     ArrayList<Player> players;
@@ -18,9 +19,11 @@ public class GameTest {
     public void before(){
         player1 = new Player("Player 1");
         player2 = new Player("Player 2");
+        player3 = new Player("Player 3");
         players = new ArrayList<>();
         players.add(player1);
         players.add(player2);
+        players.add(player3);
         deck = new Deck();
         game = game = new Game(players, deck, player2);
     }
@@ -32,7 +35,7 @@ public class GameTest {
 
     @Test
     public void canGetNoOfPlayers(){
-        assertEquals(2, game.numberOfPlayers());
+        assertEquals(3, game.numberOfPlayers());
     }
 
     @Test
@@ -40,7 +43,8 @@ public class GameTest {
         game.initialDeal();
         assertEquals(2, player1.numberOfCards());
         assertEquals(2, player2.numberOfCards());
-        assertEquals(48, deck.numberOfCards());
+        assertEquals(2, player3.numberOfCards());
+        assertEquals(46, game.getDeck().numberOfCards());
     }
 
     @Test
