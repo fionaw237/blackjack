@@ -68,6 +68,10 @@ public class Game {
         return (choice.equalsIgnoreCase("S")) || (choice.equalsIgnoreCase("T"));
     }
 
+    public boolean checkAceChoice(String choice){
+        return (choice.equalsIgnoreCase("H")) || (choice.equalsIgnoreCase("L"));
+    }
+
     public Deck getDeck() {
         return this.deck;
     }
@@ -76,7 +80,11 @@ public class Game {
         for (Card playerCard : player.getCards()){
             System.out.println(playerCard.getName());
         }
-        System.out.println("which have a total value of " + player.getHandValue());
+
+        if (player == this.dealer){
+            System.out.println("which have a total value of " + player.getHandValue());
+        }
+
         System.out.println("");
     }
 

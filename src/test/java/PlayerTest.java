@@ -101,9 +101,17 @@ public class PlayerTest {
     public void canChooseAceHigh(){
         player.receiveCard(card1);
         assertEquals(1, player.getHandValue());
-        player.chooseAceHigh(card1);
+        player.chooseAceHigh();
         assertEquals(11, player.getHandValue());
+    }
 
+    @Test
+    public void canGetNumberOfAces(){
+        assertEquals(0, player.numberOfAces());
+        player.receiveCard(card1);
+        assertEquals(1, player.numberOfAces());
+        player.receiveCard(card1);
+        assertEquals(2, player.numberOfAces());
     }
 
 

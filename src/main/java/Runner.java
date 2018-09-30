@@ -32,8 +32,27 @@ public class Runner {
                     Scanner scan = new Scanner(System.in);
                     choice = scan.next();
                     if (choice.equalsIgnoreCase("S")){
+                        if (player.hasCertainCard(Rank.ACE)){
+                            int aces = player.numberOfAces();
+                            System.out.println("You have "+ aces + " aces(s)");
+                            for (int i = 0; i < player.numberOfAces(); i++) {
+                                System.out.println("Ace number " + i+1 + ": high or low? Type H or L");
+
+                                String aceChoice = scan.next();
+
+                                while (!game.checkAceChoice(aceChoice)){
+                                    System.out.println("Please type H for high or L for low");
+                                    aceChoice = scan.next();
+                                }
+
+                                if (aceChoice.equalsIgnoreCase("H")){
+                                    player.chooseAceHigh();
+                                }
+                            }
+                        }
+                        System.out.println("Your total is " + player.getHandValue());
                         break;
-                    };
+                    }
 
                     while (!game.checkInput(choice)){
                         System.out.println("Please type S to stick or T to twist");
