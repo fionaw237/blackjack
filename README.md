@@ -1,4 +1,10 @@
-# H1 BlackJack Rules
+# Blackjack
+
+- This is a basic text-based Blackjack game allowing 1 or more human players to play against a computer dealer. It is currently set up with two players and a dealer.
+
+- Can run using IDE/terminal.
+
+## Rules
 
 1. Aces may be counted as 1 or 11 points, cards 2 to 9 are counted according to card value, and tens and face cards count as ten points (NOTE: currently only the human players can set ace as high - the computer will only do this if it has a "blackjack".)
 
