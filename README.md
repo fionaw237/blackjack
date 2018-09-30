@@ -21,7 +21,7 @@
  - Stand: Player stands pat with his cards
 - Twist: Player draws another card (and more if he wishes). If this card causes the player's total points to exceed 21 (known as "breaking" or "busting"), then she/he loses
 
-6. After each player has had her/his turn, the dealer will turn over their hole card.
+6. After each player has had her/his turn, the dealer will turn over their second card.
 - If the dealer has 16 or less, they will draw another card
 - If the dealer goes over 21 points, then any player who didn't already bust will win
 - If the dealer does not bust, then the higher point total between the player and dealer will win
