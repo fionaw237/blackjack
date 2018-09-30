@@ -1,12 +1,12 @@
 BlackJack Rules
 
-Aces may be counted as 1 or 11 points, cards 2 to 9 are counted according to card value, and tens and face cards count as ten points (NOTE: currently only the human players can set ace as high - the computer will only do this if it has a "blackjack".)
+1. Aces may be counted as 1 or 11 points, cards 2 to 9 are counted according to card value, and tens and face cards count as ten points (NOTE: currently only the human players can set ace as high - the computer will only do this if it has a "blackjack".)
 
-The value of a hand is the sum of the point values of the individual cards
+2. The value of a hand is the sum of the point values of the individual cards
 
-Except, a "blackjack" is the highest hand, consisting of an ace and any 10-point card, and it outranks all other 21-point hands
+*Except, a "blackjack" is the highest hand, consisting of an ace and any 10-point card, and it outranks all other 21-point hands
 
-To start, the dealer will give two cards to each player and two cards to herself/himself
+3. To start, the dealer will give two cards to each player and two cards to herself/himself
 
 One of the dealer cards is dealt face up
 Play begins with the player to the dealer's left. The following are the choices available to the player:
