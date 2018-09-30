@@ -97,5 +97,14 @@ public class PlayerTest {
         assertEquals(false, player.hasBlackjack());
     }
 
+    @Test
+    public void canChooseAceHigh(){
+        player.receiveCard(card1);
+        assertEquals(1, player.getHandValue());
+        player.chooseAceHigh(card1);
+        assertEquals(11, player.getHandValue());
+
+    }
+
 
 }

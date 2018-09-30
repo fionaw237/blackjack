@@ -30,4 +30,11 @@ public class CardTest {
         assertEquals("ACE of HEARTS", card.getName());
     }
 
+    @Test
+    public void canMakeAceHigh(){
+        assertEquals(1, card.getValue());
+        card.makeHigh();
+        assertEquals(11, card.getValue());
+    }
+
 }

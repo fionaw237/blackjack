@@ -38,6 +38,7 @@ public class Player {
         for (Card card : this.cards){
             total += card.getValue();
         }
+
         return total;
     }
 
@@ -94,4 +95,11 @@ public class Player {
     public boolean hasBlackjack(){
         return (numberOfCards() == 2 && hasCertainCard(Rank.ACE) && hasRoyalCard());
     }
+
+
+    public void chooseAceHigh(Card card) {
+        if (card.getRank() == Rank.ACE){
+            card.makeHigh();
+        }
+        }
 }

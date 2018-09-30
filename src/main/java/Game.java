@@ -38,15 +38,19 @@ public class Game {
             return null;
         }
 
-
         if (this.dealer.getHandValue() > winner.getHandValue()){
             winner = dealer;
         }
-
         return winner;
     }
 
     public boolean isDraw(Player player){
+
+        if (this.dealer.getHandValue() == 21 && player.getHandValue() == 21){
+            System.out.println("hi");
+            return dealer.hasBlackjack() == player.hasBlackjack();
+        }
+
         return this.dealer.getHandValue() == player.getHandValue();
     }
 

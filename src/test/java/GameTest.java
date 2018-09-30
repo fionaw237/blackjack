@@ -99,4 +99,16 @@ public class GameTest {
         assertEquals(false, game.checkInput(choice));
     }
 
+//    @Test
+//    public void bothScore21DealerWinsWithBlackjack(){
+//        player1.receiveCard(new Card(Suit.HEARTS, Rank.ACE));
+//        player2.receiveCard(new Card(Suit.CLUBS, Rank.ACE));
+//        player1.receiveCard(new Card(Suit.HEARTS, Rank.TEN));
+//        player2.receiveCard(new Card(Suit.DIAMONDS, Rank.KING));
+//        assertEquals(21, game.getDealer().getHandValue());
+//        assertEquals(21, player1.getHandValue());
+//
+//        assertEquals(false, game.isDraw(player1));
+//    }
+
 }
