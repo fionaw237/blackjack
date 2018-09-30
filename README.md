@@ -1,4 +1,4 @@
-BlackJack Rules
+# H1 BlackJack Rules
 
 1. Aces may be counted as 1 or 11 points, cards 2 to 9 are counted according to card value, and tens and face cards count as ten points (NOTE: currently only the human players can set ace as high - the computer will only do this if it has a "blackjack".)
 
