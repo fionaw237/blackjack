@@ -114,4 +114,20 @@ public class PlayerTest {
         assertEquals(2, player.getNumberOfAces());
     }
 
+    @Test
+    public void has21True() {
+        Card newCard = new Card(Suit.HEARTS, Rank.QUEEN);
+        player.receiveCard(card1);
+        player.receiveCard(newCard);
+        player.receiveCard(newCard);
+        assertEquals(true, player.has21());
+    }
+
+    @Test
+    public void has21False() {
+        Card newCard = new Card(Suit.HEARTS, Rank.QUEEN);
+        player.receiveCard(card1);
+        assertEquals(false, player.has21());
+    }
+
 }

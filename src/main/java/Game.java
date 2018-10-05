@@ -14,13 +14,16 @@ public class Game {
     }
 
     public void initialDeal() {
+        dealTwoCardsToEachPlayer();
+    }
 
+    public void dealTwoCardsToEachPlayer() {
         for (int i = 0; i < 2 ; i++) {
-            for (Player player : this.players){
-                Card card = this.dealer.deal(this.deck);
+            for (Player player : players){
+                Card card = dealer.deal(deck);
                 player.receiveCard(card);
-                }
             }
+        }
     }
 
     public ArrayList<Player> getPlayers() {
@@ -28,7 +31,7 @@ public class Game {
     }
 
     public int numberOfPlayers() {
-        return this.players.size();
+        return players.size();
     }
 
 
@@ -39,7 +42,7 @@ public class Game {
             return winner;
         }
 
-        if (this.dealer.getHandValue() == 21 && player.getHandValue() == 21){
+        if (bothHave21(player)){
             if (dealer.hasBlackjack()){
                 winner = dealer;
             }
@@ -47,32 +50,49 @@ public class Game {
                 winner = player;
             }
         }
-        else if (this.dealer.getHandValue() > player.getHandValue()){
-            winner = dealer;
-        }
-        else if (this.dealer.getHandValue() < player.getHandValue()){
+        else if (playerScoreIsHigher(player)){
             winner = player;
+        }
+        else if (!playerScoreIsHigher(player)){
+            winner = dealer;
         }
         return winner;
     }
 
+    public boolean playerScoreIsHigher(Player player){
+        return dealer.getHandValue() < player.getHandValue();
+    }
+
     public boolean isDraw(Player player){
 
-        if (this.dealer.getHandValue() == 21 && player.getHandValue() == 21){
-            return dealer.hasBlackjack() == player.hasBlackjack();
+        if (bothHave21(player)){
+            return bothHaveBlackjack(player);
         }
 
-        return this.dealer.getHandValue() == player.getHandValue();
+        return scoresAreEqual(player);
+    }
+
+    private boolean bothHave21(Player player) {
+        return dealer.has21() && player.has21();
+    }
+
+    public boolean scoresAreEqual(Player player) {
+        return dealer.getHandValue() == player.getHandValue();
+    }
+
+
+    public boolean bothHaveBlackjack(Player player) {
+        return dealer.hasBlackjack() == player.hasBlackjack();
     }
 
     public void changeDealer(Player player) {
-        this.dealer.removeAsDealer();
+        dealer.removeAsDealer();
         player.setAsDealer();
-        this.dealer = player;
+        dealer = player;
     }
 
     public Player getDealer() {
-        return this.dealer;
+        return dealer;
     }
 
     public boolean checkInput(String choice){
@@ -84,7 +104,7 @@ public class Game {
     }
 
     public Deck getDeck() {
-        return this.deck;
+        return deck;
     }
 
     public void showCards(Player player) {
@@ -92,8 +112,8 @@ public class Game {
             System.out.println(playerCard.getName());
         }
 
-        if (player == this.dealer){
-            if (this.dealer.hasBlackjack()){
+        if (player == dealer){
+            if (dealer.hasBlackjack()){
                 System.out.println("Dealer has blackjack!");
             }
             else {
@@ -137,41 +157,5 @@ public class Game {
         }
         return allBust;
     }
-
-
-//    public Player getWinner(){
-//
-//        if (isDraw()){
-//            return null;
-//        }
-//
-//        Player winner = this.players.get(0);
-//        for (Player player : players){
-//            if (player.getHandValue() > winner.getHandValue()){
-//                winner = player;
-//            }
-//        }
-//        return winner;
-//    }
-
-//    public boolean isDraw(){
-//        int playersWithHighScore = 0;
-//        int highScore = highestScore();
-//        for (Player player : players){
-//            if (player.getHandValue() == highScore){
-//                playersWithHighScore += 1;            }
-//        }
-//        return playersWithHighScore > 1;
-//    }
-//
-//    public int highestScore(){
-//        int highScore = 0;
-//        for (Player player : this.players){
-//            if (player.getHandValue() > highScore){
-//                highScore = player.getHandValue();
-//            }
-//        }
-//        return highScore;
-//    }
 
 }

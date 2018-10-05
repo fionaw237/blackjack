@@ -104,7 +104,8 @@ public class Player {
         return this.numberOfAces;
     }
 
-    public int getHighAces() {
-        return this.highAces;
+    public boolean has21(){
+        return getHandValue() == 21;
     }
+
 }

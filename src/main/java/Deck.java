@@ -14,7 +14,7 @@ public class Deck {
     }
 
     public ArrayList<Card> getCards() {
-        return new ArrayList<Card>(cards);
+        return new ArrayList<>(cards);
     }
 
     private void populate() {
