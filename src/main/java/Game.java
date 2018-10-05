@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Game {
 
@@ -114,14 +115,14 @@ public class Game {
 
         if (player == dealer){
             if (dealer.hasBlackjack()){
-                System.out.println("Dealer has blackjack!");
+                GameDisplay.dealerHasBlackjack();
             }
             else {
-                System.out.println("which have a total value of " + player.getHandValue());
+                GameDisplay.dealerRunningTotal(dealer);
             }
         }
 
-        System.out.println("");
+        GameDisplay.addBlankLine();
     }
 
     public String finalResult(Player player) {
@@ -158,4 +159,95 @@ public class Game {
         return allBust;
     }
 
+    public void play() {
+        initialDeal();
+
+        for (Player player : getPlayers()){
+            if (!player.checkIfDealer()){
+                GameDisplay.addBlankLine();
+                GameDisplay.welcome(player);
+                Card dealerFirstCard = getDealer().firstCard();
+                GameDisplay.dealerFirstCard(dealerFirstCard);
+
+                String choice = "T";
+
+                while (choice.equalsIgnoreCase("T")){
+
+                    System.out.println("Your cards are:");
+                    showCards(player);
+
+                    GameDisplay.stickOrTwist();
+                    Scanner scan = new Scanner(System.in);
+                    choice = scan.next();
+
+                    while (!checkInput(choice)){
+                        GameDisplay.ensureSorT();
+                        choice = scan.next();
+                    }
+
+                    if (choice.equalsIgnoreCase("S")){
+                        if (player.hasCertainCard(Rank.ACE)){
+                            GameDisplay.numberOfAces(player.getNumberOfAces());
+
+                            for (int aceNumber = 1; aceNumber < player.getNumberOfAces() + 1; aceNumber++) {
+
+                                GameDisplay.highOrLow(aceNumber);
+
+                                String aceChoice = scan.next();
+
+                                while (!checkAceChoice(aceChoice)){
+                                    GameDisplay.ensureHorL();
+                                    aceChoice = scan.next();
+                                }
+
+                                if (aceChoice.equalsIgnoreCase("H")){
+                                    player.chooseAceHigh();
+                                }
+                            }
+                        }
+
+                        if (player.hasBlackjack()){
+                            GameDisplay.youHaveBlackjack();
+                        }
+                        else {
+                            GameDisplay.playerTotal(player);
+                        }
+                        break;
+                    }
+
+                    Card nextCard = additionalDeal(player);
+
+                    if (player.checkIfBust()){
+                        GameDisplay.nextCard(nextCard);
+                        GameDisplay.youLose(player);
+                        GameDisplay.addBlankLine();
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!allPlayersBust()){
+
+            GameDisplay.dealerSecondCard();
+            showCards(getDealer());
+
+            if (getDealer().hasBlackjack()){
+                getDealer().chooseAceHigh();
+            }
+
+            while (getDealer().getHandValue() < 16){
+                additionalDeal(getDealer());
+                GameDisplay.dealerGetsAnotherCard();
+                showCards(getDealer());
+            }
+
+            for (Player player : getPlayers()){
+                if (!player.checkIfDealer() && !player.checkIfBust()){
+                    String result = finalResult(player);
+                    GameDisplay.result(result);
+                }
+            }
+        }
+    }
 }
