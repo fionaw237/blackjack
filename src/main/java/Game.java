@@ -14,6 +14,19 @@ public class Game {
         dealer.setAsDealer();
     }
 
+    public void play() {
+        initialDeal();
+
+        for (Player player : getPlayers()){
+            playerTurn(player);
+        }
+
+        if (!allPlayersBust()){
+            dealerTurn();
+            getAllResults();
+        }
+    }
+
     public void initialDeal() {
         dealTwoCardsToEachPlayer();
     }
@@ -159,93 +172,91 @@ public class Game {
         return allBust;
     }
 
-    public void play() {
-        initialDeal();
 
+    public void getAllResults() {
         for (Player player : getPlayers()){
-            if (!player.checkIfDealer()){
-                GameDisplay.addBlankLine();
-                GameDisplay.welcome(player);
-                Card dealerFirstCard = getDealer().firstCard();
-                GameDisplay.dealerFirstCard(dealerFirstCard);
-
-                String choice = "T";
-
-                while (choice.equalsIgnoreCase("T")){
-
-                    System.out.println("Your cards are:");
-                    showCards(player);
-
-                    GameDisplay.stickOrTwist();
-                    Scanner scan = new Scanner(System.in);
-                    choice = scan.next();
-
-                    while (!checkInput(choice)){
-                        GameDisplay.ensureSorT();
-                        choice = scan.next();
-                    }
-
-                    if (choice.equalsIgnoreCase("S")){
-                        if (player.hasCertainCard(Rank.ACE)){
-                            GameDisplay.numberOfAces(player.getNumberOfAces());
-
-                            for (int aceNumber = 1; aceNumber < player.getNumberOfAces() + 1; aceNumber++) {
-
-                                GameDisplay.highOrLow(aceNumber);
-
-                                String aceChoice = scan.next();
-
-                                while (!checkAceChoice(aceChoice)){
-                                    GameDisplay.ensureHorL();
-                                    aceChoice = scan.next();
-                                }
-
-                                if (aceChoice.equalsIgnoreCase("H")){
-                                    player.chooseAceHigh();
-                                }
-                            }
-                        }
-
-                        if (player.hasBlackjack()){
-                            GameDisplay.youHaveBlackjack();
-                        }
-                        else {
-                            GameDisplay.playerTotal(player);
-                        }
-                        break;
-                    }
-
-                    Card nextCard = additionalDeal(player);
-
-                    if (player.checkIfBust()){
-                        GameDisplay.nextCard(nextCard);
-                        GameDisplay.youLose(player);
-                        GameDisplay.addBlankLine();
-                        break;
-                    }
-                }
+            if (!player.checkIfDealer() && !player.checkIfBust()){
+                String result = finalResult(player);
+                GameDisplay.result(result);
             }
         }
+    }
 
-        if (!allPlayersBust()){
+    public void dealerTurn() {
+        GameDisplay.dealerSecondCard();
+        showCards(getDealer());
 
-            GameDisplay.dealerSecondCard();
+        if (getDealer().hasBlackjack()){
+            getDealer().chooseAceHigh();
+        }
+
+        while (getDealer().getHandValue() < 16){
+            additionalDeal(getDealer());
+            GameDisplay.dealerGetsAnotherCard();
             showCards(getDealer());
+        }
+    }
 
-            if (getDealer().hasBlackjack()){
-                getDealer().chooseAceHigh();
-            }
+    public void playerTurn(Player player) {
+        if (!player.checkIfDealer()){
+            GameDisplay.addBlankLine();
+            GameDisplay.welcome(player);
+            Card dealerFirstCard = getDealer().firstCard();
+            GameDisplay.dealerFirstCard(dealerFirstCard);
 
-            while (getDealer().getHandValue() < 16){
-                additionalDeal(getDealer());
-                GameDisplay.dealerGetsAnotherCard();
-                showCards(getDealer());
-            }
+            String choice = "T";
 
-            for (Player player : getPlayers()){
-                if (!player.checkIfDealer() && !player.checkIfBust()){
-                    String result = finalResult(player);
-                    GameDisplay.result(result);
+            while (choice.equalsIgnoreCase("T")){
+
+                System.out.println("Your cards are:");
+                showCards(player);
+
+                GameDisplay.stickOrTwist();
+                Scanner scan = new Scanner(System.in);
+                choice = scan.next();
+
+                while (!checkInput(choice)){
+                    GameDisplay.ensureSorT();
+                    choice = scan.next();
+                }
+
+                if (choice.equalsIgnoreCase("S")){
+                    if (player.hasCertainCard(Rank.ACE)){
+                        GameDisplay.numberOfAces(player.getNumberOfAces());
+
+                        for (int aceNumber = 1; aceNumber < player.getNumberOfAces() + 1; aceNumber++) {
+
+                            GameDisplay.highOrLow(aceNumber);
+
+                            String aceChoice = scan.next();
+
+                            while (!checkAceChoice(aceChoice)){
+                                GameDisplay.ensureHorL();
+                                aceChoice = scan.next();
+                            }
+
+                            if (aceChoice.equalsIgnoreCase("H")){
+                                player.chooseAceHigh();
+                            }
+                        }
+                    }
+
+                    if (player.hasBlackjack()){
+                        GameDisplay.youHaveBlackjack();
+                    }
+                    else {
+                        GameDisplay.playerTotal(player);
+                    }
+                    break;
+                }
+
+                Card nextCard = additionalDeal(player);
+
+                if (player.checkIfBust()){
+                    GameDisplay.nextCard(nextCard);
+                    GameDisplay.youLose(player);
+                    GameDisplay.addBlankLine();
+                    break;
                 }
             }
         }
