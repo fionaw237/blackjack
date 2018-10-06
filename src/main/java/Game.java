@@ -6,12 +6,14 @@ public class Game {
     private ArrayList<Player> players;
     private Deck deck;
     private Player dealer;
+    private Scanner scan;
 
     public Game(ArrayList<Player> players, Deck deck, Player dealer) {
         this.players = players;
         this.deck = deck;
         this.dealer = dealer;
         dealer.setAsDealer();
+        scan = new Scanner(System.in);
     }
 
     public void play() {
@@ -165,8 +167,10 @@ public class Game {
     public boolean allPlayersBust() {
         boolean allBust = true;
         for (Player player : getPlayers()){
-            if (!player.checkIfBust()){
-                allBust = false;
+            if (player != dealer){
+                if (!player.checkIfBust()){
+                    allBust = false;
+                }
             }
         }
         return allBust;
@@ -211,8 +215,13 @@ public class Game {
                 System.out.println("Your cards are:");
                 showCards(player);
 
+                if (player.numberOfCards() == 5){
+                    chooseAcesHighOrLow(player);
+                    GameDisplay.playerTotal(player);
+                    break;
+                }
+
                 GameDisplay.stickOrTwist();
-                Scanner scan = new Scanner(System.in);
                 choice = scan.next();
 
                 while (!checkInput(choice)){
@@ -221,25 +230,8 @@ public class Game {
                 }
 
                 if (choice.equalsIgnoreCase("S")){
-                    if (player.hasCertainCard(Rank.ACE)){
-                        GameDisplay.numberOfAces(player.getNumberOfAces());
 
-                        for (int aceNumber = 1; aceNumber < player.getNumberOfAces() + 1; aceNumber++) {
-
-                            GameDisplay.highOrLow(aceNumber);
-
-                            String aceChoice = scan.next();
-
-                            while (!checkAceChoice(aceChoice)){
-                                GameDisplay.ensureHorL();
-                                aceChoice = scan.next();
-                            }
-
-                            if (aceChoice.equalsIgnoreCase("H")){
-                                player.chooseAceHigh();
-                            }
-                        }
-                    }
+                    chooseAcesHighOrLow(player);
 
                     if (player.hasBlackjack()){
                         GameDisplay.youHaveBlackjack();
@@ -257,6 +249,28 @@ public class Game {
                     GameDisplay.youLose(player);
                     GameDisplay.addBlankLine();
                     break;
+                }
+            }
+        }
+    }
+
+    public void chooseAcesHighOrLow(Player player) {
+        if (player.hasCertainCard(Rank.ACE)){
+            GameDisplay.numberOfAces(player.getNumberOfAces());
+
+            for (int aceNumber = 1; aceNumber < player.getNumberOfAces() + 1; aceNumber++) {
+
+                GameDisplay.highOrLow(aceNumber);
+
+                String aceChoice = scan.next();
+
+                while (!checkAceChoice(aceChoice)){
+                    GameDisplay.ensureHorL();
+                    aceChoice = scan.next();
+                }
+
+                if (aceChoice.equalsIgnoreCase("H")){
+                    player.chooseAceHigh();
                 }
             }
         }
