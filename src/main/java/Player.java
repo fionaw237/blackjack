@@ -4,14 +4,14 @@ public class Player {
     private String name;
     private ArrayList<Card> cards;
     private boolean isDealer;
-    private int highAces;
+    private int lowAces;
     private int numberOfAces;
 
     public Player(String name) {
         this.name = name;
         this.cards = new ArrayList<>();
         this.isDealer = false;
-        this.highAces = 0;
+        this.lowAces = 0;
     }
 
     public String getName() {
@@ -42,7 +42,7 @@ public class Player {
         for (Card card : this.cards){
             total += card.getValue();
         }
-        total += 10*this.highAces;
+        total -= 10*this.lowAces;
         return total;
     }
 
@@ -96,8 +96,8 @@ public class Player {
         return (numberOfCards() == 2 && hasCertainCard(Rank.ACE) && hasRoyalCard());
     }
 
-    public void chooseAceHigh() {
-        this.highAces += 1;
+    public void chooseAceLow() {
+        this.lowAces += 1;
         }
 
     public int getNumberOfAces() {

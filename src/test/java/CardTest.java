@@ -21,8 +21,8 @@ public class CardTest {
     }
 
     @Test
-    public void aceHasValueOf1(){
-        assertEquals(1, card.getValue());
+    public void aceHasValueOf11(){
+        assertEquals(11, card.getValue());
     }
 
     @Test

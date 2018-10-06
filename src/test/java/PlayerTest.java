@@ -42,7 +42,7 @@ public class PlayerTest {
         Card card2 = new Card(Suit.HEARTS, Rank.FOUR);
         player.receiveCard(card1);
         player.receiveCard(card2);
-        assertEquals(5, player.getHandValue());
+        assertEquals(15, player.getHandValue());
     }
 
     @Test
@@ -98,11 +98,11 @@ public class PlayerTest {
     }
 
     @Test
-    public void canChooseAceHigh(){
+    public void canChooseAceLow(){
         player.receiveCard(card1);
-        assertEquals(1, player.getHandValue());
-        player.chooseAceHigh();
         assertEquals(11, player.getHandValue());
+        player.chooseAceLow();
+        assertEquals(1, player.getHandValue());
     }
 
     @Test
@@ -118,7 +118,6 @@ public class PlayerTest {
     public void has21True() {
         Card newCard = new Card(Suit.HEARTS, Rank.QUEEN);
         player.receiveCard(card1);
-        player.receiveCard(newCard);
         player.receiveCard(newCard);
         assertEquals(true, player.has21());
     }

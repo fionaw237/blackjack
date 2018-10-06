@@ -185,11 +185,17 @@ public class Game {
 
     public void dealerTurn() {
         GameDisplay.dealerSecondCard();
+
+//        int dealerAces = dealer.getNumberOfAces();
+//        for (int i = 0; i < dealerAces; i++) {
+//            dealer.chooseAceHigh();
+//        }
+
         showCards(getDealer());
 
-        if (getDealer().hasBlackjack()){
-            getDealer().chooseAceHigh();
-        }
+//        if (getDealer().hasBlackjack()){
+//            getDealer().chooseAceHigh();
+//        }
 
         while (getDealer().getHandValue() < 16){
             additionalDeal(getDealer());
@@ -213,7 +219,7 @@ public class Game {
                 showCards(player);
 
                 if (player.numberOfCards() == 5){
-                    chooseAcesHighOrLow(player);
+                    askPlayerIfAcesHighOrLow(player);
                     GameDisplay.playerTotal(player);
                     break;
                 }
@@ -232,7 +238,7 @@ public class Game {
 
                 if (choice.equalsIgnoreCase("S")){
 
-                    chooseAcesHighOrLow(player);
+                    askPlayerIfAcesHighOrLow(player);
 
                     if (player.hasBlackjack()){
                         GameDisplay.youHaveBlackjack();
@@ -255,7 +261,7 @@ public class Game {
         }
     }
 
-    public void chooseAcesHighOrLow(Player player) {
+    public void askPlayerIfAcesHighOrLow(Player player) {
         if (player.hasCertainCard(Rank.ACE)){
             GameDisplay.numberOfAces(player.getNumberOfAces());
 
@@ -274,8 +280,8 @@ public class Game {
                     aceChoice = scan.next();
                 }
 
-                if (aceChoice.equalsIgnoreCase("H")){
-                    player.chooseAceHigh();
+                if (aceChoice.equalsIgnoreCase("L")){
+                    player.chooseAceLow();
                 }
             }
         }

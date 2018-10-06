@@ -13,6 +13,7 @@ public class GameTest {
     Deck deck;
     Game game;
     ArrayList<Player> players;
+    ArrayList<String> allowedChoices;
 
     @Before
     public void before(){
@@ -24,7 +25,10 @@ public class GameTest {
         players.add(player2);
         players.add(player3);
         deck = new Deck();
-        game = game = new Game(players, deck, player2);
+        game = new Game(players, deck, player2);
+        allowedChoices = new ArrayList<>();
+        allowedChoices.add("s");
+        allowedChoices.add("t");
     }
 
     @Test
@@ -92,13 +96,13 @@ public class GameTest {
     @Test
     public void checkUserInputTrue(){
         String choice = "S";
-        assertEquals(true, game.checkInput(choice));
+        assertEquals(true, game.checkInput(choice, allowedChoices));
     }
 
     @Test
     public void checkUserInputFalse(){
         String choice = "batman";
-        assertEquals(false, game.checkInput(choice));
+        assertEquals(false, game.checkInput(choice, allowedChoices));
     }
 
     @Test
@@ -107,8 +111,8 @@ public class GameTest {
         player2.receiveCard(new Card(Suit.CLUBS, Rank.ACE));
         player1.receiveCard(new Card(Suit.HEARTS, Rank.TEN));
         player2.receiveCard(new Card(Suit.DIAMONDS, Rank.KING));
-        player1.chooseAceHigh();
-        player2.chooseAceHigh();
+//        player1.chooseAceHigh();
+//        player2.chooseAceHigh();
         assertEquals(21, game.getDealer().getHandValue());
         assertEquals(21, player1.getHandValue());
         assertEquals(false, game.isDraw(player1));
@@ -122,8 +126,8 @@ public class GameTest {
         player2.receiveCard(new Card(Suit.CLUBS, Rank.ACE));
         player2.receiveCard(new Card(Suit.HEARTS, Rank.TEN));
         player1.receiveCard(new Card(Suit.DIAMONDS, Rank.KING));
-        player1.chooseAceHigh();
-        player2.chooseAceHigh();
+//        player1.chooseAceHigh();
+//        player2.chooseAceHigh();
         assertEquals(21, game.getDealer().getHandValue());
         assertEquals(21, player1.getHandValue());
         assertEquals(false, game.isDraw(player1));
@@ -136,8 +140,8 @@ public class GameTest {
         player2.receiveCard(new Card(Suit.CLUBS, Rank.ACE));
         player2.receiveCard(new Card(Suit.HEARTS, Rank.QUEEN));
         player1.receiveCard(new Card(Suit.DIAMONDS, Rank.KING));
-        player1.chooseAceHigh();
-        player2.chooseAceHigh();
+//        player1.chooseAceHigh();
+//        player2.chooseAceHigh();
         assertEquals(21, game.getDealer().getHandValue());
         assertEquals(21, player1.getHandValue());
         assertEquals(true, game.isDraw(player1));
