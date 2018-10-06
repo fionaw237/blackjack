@@ -67,4 +67,8 @@ public class GameDisplay {
     public static void numberOfAces(int number) {
         System.out.println("You have " + number + " aces(s)");
     }
+
+    public static void yourCardsAre() {
+        System.out.println("Your cards are:");
+    }
 }

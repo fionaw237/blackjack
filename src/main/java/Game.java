@@ -17,6 +17,7 @@ public class Game {
     }
 
     public void play() {
+
         initialDeal();
 
         for (Player player : getPlayers()){
@@ -111,12 +112,8 @@ public class Game {
         return dealer;
     }
 
-    public boolean checkInput(String choice){
-        return (choice.equalsIgnoreCase("S")) || (choice.equalsIgnoreCase("T"));
-    }
-
-    public boolean checkAceChoice(String choice){
-        return (choice.equalsIgnoreCase("H")) || (choice.equalsIgnoreCase("L"));
+    public boolean checkInput(String choice, ArrayList<String> allowedInputs){
+        return allowedInputs.contains(choice.toLowerCase());
     }
 
     public Deck getDeck() {
@@ -212,7 +209,7 @@ public class Game {
 
             while (choice.equalsIgnoreCase("T")){
 
-                System.out.println("Your cards are:");
+                GameDisplay.yourCardsAre();
                 showCards(player);
 
                 if (player.numberOfCards() == 5){
@@ -224,7 +221,11 @@ public class Game {
                 GameDisplay.stickOrTwist();
                 choice = scan.next();
 
-                while (!checkInput(choice)){
+                ArrayList<String> allowedChoices = new ArrayList<>();
+                allowedChoices.add("s");
+                allowedChoices.add("t");
+
+                while (!checkInput(choice, allowedChoices)){
                     GameDisplay.ensureSorT();
                     choice = scan.next();
                 }
@@ -264,7 +265,11 @@ public class Game {
 
                 String aceChoice = scan.next();
 
-                while (!checkAceChoice(aceChoice)){
+                ArrayList<String> allowedChoicesAces = new ArrayList<>();
+                allowedChoicesAces.add("h");
+                allowedChoicesAces.add("l");
+
+                while (!checkInput(aceChoice, allowedChoicesAces)){
                     GameDisplay.ensureHorL();
                     aceChoice = scan.next();
                 }
@@ -275,4 +280,5 @@ public class Game {
             }
         }
     }
+
 }
