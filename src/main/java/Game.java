@@ -5,15 +5,18 @@ public class Game {
 
     private ArrayList<Player> players;
     private Deck deck;
-    private Player dealer;
+    private Dealer dealer;
     private Scanner scan;
 
-    public Game(ArrayList<Player> players, Deck deck, Player dealer) {
+    public Game(ArrayList<Player> players, Deck deck, Dealer dealer) {
         this.players = players;
         this.deck = deck;
         this.dealer = dealer;
-        dealer.setAsDealer();
         scan = new Scanner(System.in);
+    }
+
+    public Player getDealer() {
+        return dealer;
     }
 
     public void play() {
@@ -36,9 +39,9 @@ public class Game {
 
     public void dealTwoCardsToEachPlayer() {
         for (int i = 0; i < 2 ; i++) {
+            dealer.deal(dealer, deck);
             for (Player player : players){
-                Card card = dealer.deal(deck);
-                player.receiveCard(card);
+                dealer.deal(player, deck);
             }
         }
     }
@@ -102,16 +105,6 @@ public class Game {
         return dealer.hasBlackjack() == player.hasBlackjack();
     }
 
-    public void changeDealer(Player player) {
-        dealer.removeAsDealer();
-        player.setAsDealer();
-        dealer = player;
-    }
-
-    public Player getDealer() {
-        return dealer;
-    }
-
     public boolean checkInput(String choice, ArrayList<String> allowedInputs){
         return allowedInputs.contains(choice.toLowerCase());
     }
@@ -155,9 +148,8 @@ public class Game {
         }
     }
 
-    public Card additionalDeal(Player player) {
-        Card card = getDealer().deal(getDeck());
-        player.receiveCard(card);
+    public Card twist(Player player) {
+        Card card = dealer.deal(player, getDeck());
         return card;
     }
 
@@ -176,7 +168,7 @@ public class Game {
 
     public void getAllResults() {
         for (Player player : getPlayers()){
-            if (!player.checkIfDealer() && !player.checkIfBust()){
+            if (!player.checkIfBust()){
                 String result = finalResult(player);
                 GameDisplay.result(result);
             }
@@ -198,14 +190,14 @@ public class Game {
 //        }
 
         while (getDealer().getHandValue() < 16){
-            additionalDeal(getDealer());
+            Card newCard = twist(getDealer());
             GameDisplay.dealerGetsAnotherCard();
             showCards(getDealer());
         }
     }
 
     public void playerTurn(Player player) {
-        if (!player.checkIfDealer()){
+
             GameDisplay.addBlankLine();
             GameDisplay.welcome(player);
             Card dealerFirstCard = getDealer().firstCard();
@@ -249,7 +241,7 @@ public class Game {
                     break;
                 }
 
-                Card nextCard = additionalDeal(player);
+                Card nextCard = twist(player);
 
                 if (player.checkIfBust()){
                     GameDisplay.nextCard(nextCard);
@@ -258,7 +250,6 @@ public class Game {
                     break;
                 }
             }
-        }
     }
 
     public void askPlayerIfAcesHighOrLow(Player player) {
